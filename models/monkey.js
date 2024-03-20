@@ -7,7 +7,7 @@ const MonkeySchema = new Schema({
   category: { type: Schema.Types.ObjectId, ref: "Category", required: true },
   description: { type: String, required: true, minLength: 3, maxLength: 200 },
   price: { type: Number, required: true },
-  numInStock: { type: String, required: true },
+  numInStock: { type: Number, required: true },
 });
 
 // Virtual for monkey's URL
