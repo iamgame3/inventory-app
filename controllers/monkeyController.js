@@ -14,7 +14,7 @@ exports.index = asyncHandler(async (req, res, next) => {
   ]);
 
   res.render("index", {
-    title: "Local Library Home",
+    title: "Monkey Inventory",
     monkey_count: numMonkeys,
     category_count: numCategories
   });
@@ -39,7 +39,7 @@ exports.monkey_list = asyncHandler(async (req, res) => {
     }
   
     res.render("monkey_detail", {
-      title: monkey.title,
+      title: monkey.name,
       monkey: monkey,
     });
   });

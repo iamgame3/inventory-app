@@ -33,7 +33,7 @@ exports.category_list = asyncHandler(async (req, res) => {
     }
   
     res.render("category_detail", {
-      title: "Category Detail",
+      title: category.name,
       category: category,
       category_monkeys: monkeysInCategory,
     });
