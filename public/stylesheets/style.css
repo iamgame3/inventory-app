@@ -53,3 +53,11 @@ main {
 .homepage-main-text {
     margin-bottom: 64px;
 }
+
+.detail-header {
+    margin-bottom: 32px;
+}
+
+.delete-link {
+    margin-top: 64px;
+}
