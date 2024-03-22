@@ -19,7 +19,6 @@ ul {
 
 li {
     margin: 16px;
-    list-style: none;
 }
 
 a {
@@ -43,14 +42,14 @@ main {
     background-color: #33373a;
 }
 
+.main-nav, .create-nav {
+    list-style: none;
+}
+
 .main-nav {
     margin-bottom: 64px;
 }
 
 .homepage-main-text {
     margin-bottom: 64px;
-}
-
-.homepage-list {
-    list-style: disc;
 }

@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title><%= title %></title>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel='stylesheet' href='/stylesheets/normalize.css' />
+    <link rel='stylesheet' href='/stylesheets/style.css' />
+  </head>
+  <body>
+    <nav>
+      <ul class="main-nav">
+        <li><a href="/">Home</a></li>
+        <li><a href="/monkeys">All Monkeys</a></li>
+        <li><a href="/categories">All Categories</a></li>
+      </ul>
+      <ul class="create-nav">
+        <li><a href="/monkey/create">Create A Monkey</a></li>
+        <li><a href="/category/create">Create A Category</a></li>
+      </ul>
+    </nav>
+    <main>
+      <h1><%= title %></h1>
+      <% if (category_list.length) { %>
+        <ul>
+          <% category_list.forEach(function(category) { %>
+            <li>
+              <a href="<%= category.url %>"><%= category.name %></a>
+            </li>
+          <% }); %>
+        </ul>
+      <% } else { %>
+        <p>There are no categories.</p>
+      <% } %>
+    </main>
+  </body>
+</html>
