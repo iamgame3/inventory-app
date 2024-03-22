@@ -3,12 +3,10 @@ const router = express.Router();
 const monkey_controller = require("../controllers/monkeyController");
 const category_controller = require("../controllers/categoryController");
 
-/* GET home page. */
-router.get('/', function(req, res, next) {
-  res.render('index', { title: 'Home' });
-});
-
 /// MONKEY ROUTES ///
+
+/* GET home page. */
+router.get('/', monkey_controller.index);
 
 // This must come before routes that display Monkey (uses id).
 router.get("/monkey/create", monkey_controller.monkey_create_get);

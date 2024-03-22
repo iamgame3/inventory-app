@@ -1,6 +1,24 @@
 const Monkey = require("../models/monkey");
+const Category = require("../models/category");
 const { body, validationResult } = require("express-validator");
 const asyncHandler = require("express-async-handler");
+
+exports.index = asyncHandler(async (req, res, next) => {
+  // Get details of monkeys and category counts (in parallel)
+  const [
+    numMonkeys,
+    numCategories
+  ] = await Promise.all([
+    Monkey.countDocuments({}).exec(),
+    Category.countDocuments({}).exec()
+  ]);
+
+  res.render("index", {
+    title: "Local Library Home",
+    monkey_count: numMonkeys,
+    category_count: numCategories
+  });
+});
 
 // Display list of all Monkeys.
 exports.monkey_list = asyncHandler(async (req, res, next) => {
