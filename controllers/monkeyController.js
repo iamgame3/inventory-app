@@ -21,14 +21,27 @@ exports.index = asyncHandler(async (req, res, next) => {
 });
 
 // Display list of all Monkeys.
-exports.monkey_list = asyncHandler(async (req, res, next) => {
+exports.monkey_list = asyncHandler(async (req, res) => {
     const allMonkeys = await Monkey.find().sort({ title: 1 }).exec();
     res.render("monkey_list", { title: "All Monkeys", monkey_list: allMonkeys });
   });
   
   // Display detail page for a specific Monkey.
   exports.monkey_detail = asyncHandler(async (req, res, next) => {
-    res.send(`NOT IMPLEMENTED: Monkey detail: ${req.params.id}`);
+    // Get details of monkeys
+    const monkey = await Monkey.findById(req.params.id).populate("category").exec();
+  
+    if (monkey === null) {
+      // No results.
+      const err = new Error("Monkey not found");
+      err.status = 404;
+      return next(err);
+    }
+  
+    res.render("monkey_detail", {
+      title: monkey.title,
+      monkey: monkey,
+    });
   });
   
   // Display Monkey create form on GET.

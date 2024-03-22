@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title><%= title %></title>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel='stylesheet' href='/stylesheets/normalize.css' />
+    <link rel='stylesheet' href='/stylesheets/style.css' />
+  </head>
+  <body>
+    <nav>
+      <ul class="main-nav">
+        <li><a href="/">Home</a></li>
+        <li><a href="/monkeys">All Monkeys</a></li>
+        <li><a href="/categories">All Categories</a></li>
+      </ul>
+      <ul class="create-nav">
+        <li><a href="/monkey/create">Create A Monkey</a></li>
+        <li><a href="/category/create">Create A Category</a></li>
+      </ul>
+    </nav>
+    <main>
+        <h1 class="detail-header">Name: <%= monkey.name %></h1>
+
+        <p><strong>Price: </strong>
+            $<%= monkey.price %>
+        </p>
+        
+        <p><strong>Description:</strong> <%= monkey.description %></p>
+        <p><strong>In Stock:</strong> <%= monkey.numInStock %></p>
+        
+        <p><strong>Category: </strong>
+          <a href="<%= monkey.category.url %>"><%= monkey.category.name %></a>
+        </p>
+
+        <p class="delete-link">
+          <a href="<%= monkey.url %>/delete">Delete monkey</a>
+        </p>
+        <p>
+          <a href="<%= monkey.url %>/update">Update monkey</a>
+        </p>
+        
+        </div>
+    </main>
+  </body>
+</html>

@@ -4,7 +4,7 @@ const { body, validationResult } = require("express-validator");
 const asyncHandler = require("express-async-handler");
 
 // Display list of all Categories.
-exports.category_list = asyncHandler(async (req, res, next) => {
+exports.category_list = asyncHandler(async (req, res) => {
     const allCategories = await Category.find().sort({ name: 1 }).exec();
     res.render("category_list", {
       title: "All Categories",
@@ -13,12 +13,12 @@ exports.category_list = asyncHandler(async (req, res, next) => {
   });
   
   // Display detail page for a specific Category.
-  exports.category_detail = asyncHandler(async (req, res, next) => {
+  exports.category_detail = asyncHandler(async (req, res) => {
     const allMonkeys = await Monkey.find().sort({ title: 1 }).exec();
     res.render("monkey_list", { title: "All Monkeys", monkey_list: allMonkeys });
   });
   
-  // Display detail page for a specific Monkey.
+  // Display detail page for a specific Category.
   exports.category_detail = asyncHandler(async (req, res, next) => {
     // Get details of category and all associated monkeys (in parallel)
     const [category, monkeysInCategory] = await Promise.all([

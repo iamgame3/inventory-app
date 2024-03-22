@@ -13,6 +13,11 @@ body {
     display: flex;
 }
 
+p {
+    margin-top: 32px;
+    margin-bottom: 32px;
+}
+
 ul {
     padding: 0;
 }
