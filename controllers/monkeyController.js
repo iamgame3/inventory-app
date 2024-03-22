@@ -22,7 +22,8 @@ exports.index = asyncHandler(async (req, res, next) => {
 
 // Display list of all Monkeys.
 exports.monkey_list = asyncHandler(async (req, res, next) => {
-    res.send("NOT IMPLEMENTED: Monkey list");
+    const allMonkeys = await Monkey.find().sort({ title: 1 }).exec();
+    res.render("monkey_list", { title: "All Monkeys", monkey_list: allMonkeys });
   });
   
   // Display detail page for a specific Monkey.
