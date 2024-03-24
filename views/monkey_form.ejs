@@ -36,8 +36,8 @@
             <textarea id="description" class="form-input" placeholder="Supreme monkey power..." name="description" required><%= (typeof monkey === 'undefined' ? '' : monkey.description) %></textarea>
           </div>
           <div class="form-group">
-            <label for="numinstock">In Stock:</label>
-            <input id="numinstock" class="form-input" type="number" placeholder="5" name="numinstock" required min="0" value="<%= (typeof monkey === 'undefined' ? '' : monkey.numinstock) %>">
+            <label for="numInStock">In Stock:</label>
+            <input id="numInStock" class="form-input" type="number" placeholder="5" name="numInStock" required min="0" value="<%= (typeof monkey === 'undefined' ? '' : monkey.numInStock) %>">
           </div>
           <div class="form-group">
             <label for="category">Category:</label>

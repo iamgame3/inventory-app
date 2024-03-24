@@ -69,7 +69,7 @@ exports.monkey_list = asyncHandler(async (req, res) => {
       .isLength({ min: 3 })
       .isLength({ max: 300 })
       .escape(),
-    body("numinstock").escape(),
+    body("numInStock").escape(),
     body("category").escape(),
 
     // Process request after validation and sanitization.
@@ -83,7 +83,7 @@ exports.monkey_list = asyncHandler(async (req, res) => {
         category: req.body.category,
         description: req.body.description,
         price: req.body.price,
-        numinstock: req.body.numinstock,
+        numInStock: req.body.numInStock,
       });
   
       if (!errors.isEmpty()) {
@@ -113,13 +113,29 @@ exports.monkey_list = asyncHandler(async (req, res) => {
   ];
   
   // Display Monkey delete form on GET.
-  exports.monkey_delete_get = asyncHandler(async (req, res, next) => {
-    res.send("NOT IMPLEMENTED: Monkey delete GET");
+  exports.monkey_delete_get = asyncHandler(async (req, res) => {
+    // Get details of monkey
+    const monkey = await Monkey.findById(req.params.id).exec();
+  
+    if (monkey === null) {
+      // No results.
+      res.redirect("/monkeys");
+    }
+  
+    res.render("monkey_delete", {
+      title: "Delete Monkey",
+      monkey: monkey,
+    });
   });
   
   // Handle Monkey delete on POST.
-  exports.monkey_delete_post = asyncHandler(async (req, res, next) => {
-    res.send("NOT IMPLEMENTED: Monkey delete POST");
+  exports.monkey_delete_post = asyncHandler(async (req, res) => {
+    // Get details of monkey
+    const monkey = await Monkey.findById(req.params.id).exec();
+  
+    // Delete object and redirect to the list of monkeys.
+      await Monkey.findByIdAndDelete(req.body.monkeyid);
+      res.redirect("/monkeys");
   });
   
   // Display Monkey update form on GET.
