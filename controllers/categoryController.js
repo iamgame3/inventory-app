@@ -137,11 +137,62 @@ exports.category_list = asyncHandler(async (req, res) => {
   });
   
   // Display Category update form on GET.
-  exports.category_update_get = asyncHandler(async (req, res, next) => {
-    res.send("NOT IMPLEMENTED: Category update GET");
+  exports.category_update_get = asyncHandler(async (req, res) => {
+    // Get category for form
+    const category = await Category.findById(req.params.id).exec();
+  
+    if (category === null) {
+      // No results.
+      const err = new Error("Category not found");
+      err.status = 404;
+      return next(err);
+    }
+  
+    res.render("category_form", {
+      title: "Update Category",
+      category: category,
+    });
   });
   
   // Handle Category update on POST.
-  exports.category_update_post = asyncHandler(async (req, res, next) => {
-    res.send("NOT IMPLEMENTED: Category update POST");
-  });
+  exports.category_update_post = [
+    // Validate and sanitize fields
+    body("name", "Category name must contain at least 2 characters and at most 30 characters.")
+      .trim()
+      .isLength({ min: 2 })
+      .isLength({ max: 30 })
+      .escape(),
+    body("description", "Description name must contain at least 3 characters and at most 300 characters.")
+      .trim()
+      .isLength({ min: 3 })
+      .isLength({ max: 300 })
+      .escape(),
+  
+    // Process request after validation and sanitization.
+    asyncHandler(async (req, res) => {
+      // Extract the validation errors from a request.
+      const errors = validationResult(req);
+  
+      // Create a category object with escaped and trimmed data.
+      const category = new Category({
+        name: req.body.name,
+        description: req.body.description,
+        _id: req.params.id, // This is required, or a new ID will be assigned!
+      });
+  
+      if (!errors.isEmpty()) {
+        // There are errors. Render the form again with sanitized values/error messages.
+        res.render("category_form", {
+          title: "Update Category",
+          category: category,
+          errors: errors.array(),
+        });
+        return;
+      } else {
+        // Data from form is valid. Update the record.
+        const updatedCategory = await Category.findByIdAndUpdate(req.params.id, category, {});
+        // Redirect to category detail page.
+        res.redirect(updatedCategory.url);
+      }
+    }),
+  ];
