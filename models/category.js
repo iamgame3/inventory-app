@@ -4,7 +4,7 @@ const Schema = mongoose.Schema;
 
 const CategorySchema = new Schema({
   name: { type: String, required: true, minLength: 2, maxLength: 30 },
-  description: { type: String, required: true, minLength: 3, maxLength: 200 },
+  description: { type: String, required: true, minLength: 3, maxLength: 300 },
 });
 
 // Virtual for category's URL

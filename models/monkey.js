@@ -5,7 +5,7 @@ const Schema = mongoose.Schema;
 const MonkeySchema = new Schema({
   name: { type: String, required: true, minLength: 2, maxLength: 40 },
   category: { type: Schema.Types.ObjectId, ref: "Category", required: true },
-  description: { type: String, required: true, minLength: 3, maxLength: 200 },
+  description: { type: String, required: true, minLength: 3, maxLength: 300 },
   price: { type: Number, required: true },
   numInStock: { type: Number, required: true },
 });

@@ -52,10 +52,10 @@ exports.category_list = asyncHandler(async (req, res) => {
       .isLength({ min: 2 })
       .isLength({ max: 30 })
       .escape(),
-    body("description", "Description name must contain at least 3 characters and at most 200 characters.")
+    body("description", "Description name must contain at least 3 characters and at most 300 characters.")
       .trim()
       .isLength({ min: 3 })
-      .isLength({ max: 200 })
+      .isLength({ max: 300 })
       .escape(),
   
     // Process request after validation and sanitization.

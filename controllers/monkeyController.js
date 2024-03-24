@@ -64,10 +64,10 @@ exports.monkey_list = asyncHandler(async (req, res) => {
       .isLength({ max: 40 })
       .escape(),
     body("price").escape(),
-    body("description", "Description must contain at least 3 characters and at most 200 characters.")
+    body("description", "Description must contain at least 3 characters and at most 300 characters.")
       .trim()
       .isLength({ min: 3 })
-      .isLength({ max: 200 })
+      .isLength({ max: 300 })
       .escape(),
     body("numInStock").escape(),
     body("category").escape(),
