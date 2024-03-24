@@ -47,19 +47,19 @@ exports.category_list = asyncHandler(async (req, res) => {
   // Handle Category create on POST.
   exports.category_create_post = [
     // Validate and sanitize fields
-    body("name", "Category name must contain at least 2 characters and at most 30 characters")
+    body("name", "Category name must contain at least 2 characters and at most 30 characters.")
       .trim()
       .isLength({ min: 2 })
       .isLength({ max: 30 })
       .escape(),
-    body("description", "Description name must contain at least 3 characters and at most 200 characters")
+    body("description", "Description name must contain at least 3 characters and at most 200 characters.")
       .trim()
       .isLength({ min: 3 })
       .isLength({ max: 200 })
       .escape(),
   
     // Process request after validation and sanitization.
-    asyncHandler(async (req, res, next) => {
+    asyncHandler(async (req, res) => {
       // Extract the validation errors from a request.
       const errors = validationResult(req);
   

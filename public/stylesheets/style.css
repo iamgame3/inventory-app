@@ -48,6 +48,10 @@ main {
     background-color: #33373a;
 }
 
+textarea {
+    resize: vertical;
+}
+
 .main-nav, .create-nav {
     list-style: none;
 }
@@ -69,11 +73,16 @@ main {
 }
 
 .form-input {
+    display: block;
     margin-top: 16px;
     margin-bottom: 16px;
     padding: 8px;
     border: 1px solid #24282a;
     border-radius: 4px;
+    width: calc(100% - 18px);
+}
+
+.form-select {
     width: 100%;
 }
 
