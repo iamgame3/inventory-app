@@ -69,7 +69,7 @@ exports.monkey_list = asyncHandler(async (req, res) => {
       .isLength({ min: 3 })
       .isLength({ max: 300 })
       .escape(),
-    body("numInStock").escape(),
+    body("numinstock").escape(),
     body("category").escape(),
 
     // Process request after validation and sanitization.
@@ -83,7 +83,7 @@ exports.monkey_list = asyncHandler(async (req, res) => {
         category: req.body.category,
         description: req.body.description,
         price: req.body.price,
-        numInStock: req.body.numInStock,
+        numinstock: req.body.numinstock,
       });
   
       if (!errors.isEmpty()) {

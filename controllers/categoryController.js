@@ -94,13 +94,46 @@ exports.category_list = asyncHandler(async (req, res) => {
   ];
   
   // Display Category delete form on GET.
-  exports.category_delete_get = asyncHandler(async (req, res, next) => {
-    res.send("NOT IMPLEMENTED: Category delete GET");
+  exports.category_delete_get = asyncHandler(async (req, res) => {
+    // Get details of category and all their monkeys (in parallel)
+    const [category, allMonkeysInCategory] = await Promise.all([
+      Category.findById(req.params.id).exec(),
+      Monkey.find({ category: req.params.id }).exec(),
+    ]);
+  
+    if (category === null) {
+      // No results.
+      res.redirect("/categories");
+    }
+  
+    res.render("category_delete", {
+      title: "Delete Category",
+      category: category,
+      category_monkeys: allMonkeysInCategory,
+    });
   });
   
   // Handle Category delete on POST.
-  exports.category_delete_post = asyncHandler(async (req, res, next) => {
-    res.send("NOT IMPLEMENTED: Category delete POST");
+  exports.category_delete_post = asyncHandler(async (req, res) => {
+    // Get details of category and all their monkeys (in parallel)
+    const [category, allMonkeysInCategory] = await Promise.all([
+      Category.findById(req.params.id).exec(),
+      Monkey.find({ category: req.params.id }).exec(),
+    ]);
+  
+    if (allMonkeysInCategory.length > 0) {
+      // Category has monkeys. Render in same way as for GET route.
+      res.render("category_delete", {
+        title: "Delete Category",
+        category: category,
+        category_monkeys: allMonkeysInCategory,
+      });
+      return;
+    } else {
+      // Category has no monkeys. Delete object and redirect to the list of categories.
+      await Category.findByIdAndDelete(req.body.categoryid);
+      res.redirect("/categories");
+    }
   });
   
   // Display Category update form on GET.
