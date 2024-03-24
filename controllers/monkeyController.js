@@ -140,10 +140,81 @@ exports.monkey_list = asyncHandler(async (req, res) => {
   
   // Display Monkey update form on GET.
   exports.monkey_update_get = asyncHandler(async (req, res, next) => {
-    res.send("NOT IMPLEMENTED: Monkey update GET");
+    // Get monkey and categories for form.
+    const [monkey, allCategories] = await Promise.all([
+      Monkey.findById(req.params.id).exec(),
+      Category.find({}).sort({ title: 1 }).exec(),
+    ]);
+  
+    if (monkey === null) {
+      // No results.
+      const err = new Error("Monkey not found");
+      err.status = 404;
+      return next(err);
+    }
+  
+    res.render("monkey_form", {
+      title: "Update Monkey",
+      monkey: monkey,
+      categories: allCategories,
+    });
   });
   
   // Handle Monkey update on POST.
-  exports.monkey_update_post = asyncHandler(async (req, res, next) => {
-    res.send("NOT IMPLEMENTED: Monkey update POST");
-  });
+  exports.monkey_update_post = [
+    // Validate and sanitize fields.
+      body("name", "Name must contain at least 2 characters and at most 40 characters.")
+        .trim()
+        .isLength({ min: 2 })
+        .isLength({ max: 40 })
+        .escape(),
+      body("price").escape(),
+      body("description", "Description must contain at least 3 characters and at most 300 characters.")
+        .trim()
+        .isLength({ min: 3 })
+        .isLength({ max: 300 })
+        .escape(),
+      body("numInStock").escape(),
+      body("category").escape(),
+  
+      // Process request after validation and sanitization.
+      asyncHandler(async (req, res) => {
+        // Extract the validation errors from a request.
+        const errors = validationResult(req);
+    
+        // Create a Monkey object with escaped and trimmed data.
+        const monkey = new Monkey({
+          name: req.body.name,
+          category: req.body.category,
+          description: req.body.description,
+          price: req.body.price,
+          numInStock: req.body.numInStock,
+          _id: req.params.id, // This is required, or a new ID will be assigned!
+        });
+    
+        if (!errors.isEmpty()) {
+          // There are errors. Render form again with sanitized values/error messages.
+    
+          // Get all categories for form.
+          const allCategories = await Category.find().sort({ name: 1 }).exec();
+    
+          // Mark our selected category as selected.
+          for (const category of allCategories) {
+            if (monkey.category === (category._id)) {
+              category.selected = "true";
+            }
+          }
+          res.render("monkey_form", {
+            title: "Create Monkey",
+            categories: allCategories,
+            monkey: monkey,
+            errors: errors.array(),
+          });
+        } else {
+          // Data from form is valid. Update the record.
+          const updatedMonkey = await Monkey.findByIdAndUpdate(req.params.id, monkey, {});
+          // Redirect to monkey detail page.
+          res.redirect(updatedMonkey.url);
+        }
+      }),
+    ];

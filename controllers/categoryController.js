@@ -137,7 +137,7 @@ exports.category_list = asyncHandler(async (req, res) => {
   });
   
   // Display Category update form on GET.
-  exports.category_update_get = asyncHandler(async (req, res) => {
+  exports.category_update_get = asyncHandler(async (req, res, next) => {
     // Get category for form
     const category = await Category.findById(req.params.id).exec();
   
