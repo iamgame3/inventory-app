@@ -7,6 +7,8 @@ const logger = require('morgan');
 
 const indexRouter = require('./routes/index');
 const usersRouter = require('./routes/users');
+const compression = require("compression");
+const helmet = require("helmet");
 
 const app = express();
 
@@ -24,6 +26,16 @@ async function main() {
 app.set('views', path.join(__dirname, 'views'));
 app.set('view engine', 'ejs');
 
+// Set up rate limiter: maximum of 60 requests per minute
+const RateLimit = require("express-rate-limit");
+const limiter = RateLimit({
+  windowMs: 1 * 60 * 1000, // 1 minute
+  max: 60,
+});
+// Apply rate limiter to all requests
+app.use(limiter); // Add helmet to the middleware chain.
+app.use(helmet());
+app.use(compression()); // Compress all routes
 app.use(logger('dev'));
 app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
