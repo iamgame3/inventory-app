@@ -42,6 +42,7 @@ nav {
 
 main {
     padding-left: 64px;
+    padding-right: 64px;
     width: 100%;
     color: #cbd0d0;
     background-color: #33373a;
@@ -65,4 +66,29 @@ main {
 
 .delete-link {
     margin-top: 64px;
+}
+
+.form-input {
+    margin-top: 16px;
+    margin-bottom: 16px;
+    padding: 8px;
+    border: 1px solid #24282a;
+    border-radius: 4px;
+    width: 100%;
+}
+
+.submit-button {
+    margin-top: 32px;
+    width: 96px;
+    height: 48px;
+    border: 1px solid #24282a;
+    border-radius: 8px;
+    transition: all .2s ease-in;
+    background-color: rgb(21, 105, 160);
+    color: white;
+}
+
+.submit-button:hover {
+    cursor: pointer;
+    background-color: rgb(24, 118, 180);
 }
